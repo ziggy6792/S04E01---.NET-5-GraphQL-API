@@ -17,59 +17,64 @@ using Microsoft.Extensions.Hosting;
 
 namespace CommanderGQL
 {
-    public class Startup
+  public class Startup
+  {
+    private readonly IConfiguration Configuration;
+
+    public Startup(IConfiguration configuration)
     {
-        private readonly IConfiguration Configuration;
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddPooledDbContextFactory<AppDbContext>(opt => opt.UseSqlServer
-            (Configuration.GetConnectionString("CommandConStr")));
-
-            services
-                .AddGraphQLServer()
-                .AddQueryType<Query>()
-                .AddMutationType<Mutation>()
-                .AddSubscriptionType<Subscription>()
-                .AddType<PlatformType>()
-                .AddType<AddPlatformInputType>()
-                .AddType<AddPlatformPayloadType>()
-                .AddType<CommandType>()
-                .AddType<AddCommandInputType>()
-                .AddType<AddCommandPayloadType>()
-                .AddFiltering()
-                .AddSorting()
-                .AddInMemorySubscriptions();
-                
-        }
-
-        
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseWebSockets();
-
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGraphQL();
-            });
-
-            app.UseGraphQLVoyager(new GraphQLVoyagerOptions()
-            {
-                GraphQLEndPoint = "/graphql",
-                Path = "/graphql-voyager"
-            });
-        }
+      Configuration = configuration;
     }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+      Console.WriteLine(Configuration.GetConnectionString("CommandConStr"));
+
+      //   services.AddPooledDbContextFactory<AppDbContext>(opt => opt.UseSqlServer
+      //   (Configuration.GetConnectionString("CommandConStr")));
+
+      // ToDo: Fix this
+      services.AddPooledDbContextFactory<AppDbContext>(opt => opt.UseSqlServer("Server=localhost,1433;Database=ComandsDB;User Id=SA;Password=Passw@rd"));
+
+      services
+          .AddGraphQLServer()
+          .AddQueryType<Query>()
+          .AddMutationType<Mutation>()
+          .AddSubscriptionType<Subscription>()
+          .AddType<PlatformType>()
+          .AddType<AddPlatformInputType>()
+          .AddType<AddPlatformPayloadType>()
+          .AddType<CommandType>()
+          .AddType<AddCommandInputType>()
+          .AddType<AddCommandPayloadType>()
+          .AddFiltering()
+          .AddSorting()
+          .AddInMemorySubscriptions();
+
+    }
+
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+
+      app.UseWebSockets();
+
+      app.UseRouting();
+
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapGraphQL();
+      });
+
+      app.UseGraphQLVoyager(new GraphQLVoyagerOptions()
+      {
+        GraphQLEndPoint = "/graphql",
+        Path = "/graphql-voyager"
+      });
+    }
+  }
 }
