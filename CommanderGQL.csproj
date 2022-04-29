@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="GraphQL.Server.Ui.Voyager" Version="4.4.1" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.8" />
-    <PackageReference Include="HotChocolate.Data.Entityframework" Version="11.0.8" />
-    <PackageReference Include="Microsoft.EntityframeworkCore.Design" Version="5.0.2">
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.8.1" />
+    <PackageReference Include="HotChocolate.Data.Entityframework" Version="12.8.1" />
+    <PackageReference Include="Microsoft.EntityframeworkCore.Design" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

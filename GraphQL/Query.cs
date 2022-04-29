@@ -18,9 +18,9 @@ namespace CommanderGQL.GraphQL
     /// <param name="context">The <see cref="AppDbContext"/>.</param>
     /// <returns>The queryable <see cref="Platform"/>.</returns>
     [UseDbContext(typeof(AppDbContext))]
-    // [UseFiltering]
-    // [UseSorting]
-    // [GraphQLDescription("Gets the queryable platform.")]
+    [UseFiltering]
+    [UseSorting]
+    [GraphQLDescription("Gets the queryable platform.")]
     public IQueryable<Platform> GetPlatform([ScopedService] AppDbContext context)
     {
       string bla = "1";
