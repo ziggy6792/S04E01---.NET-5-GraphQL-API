@@ -28,13 +28,10 @@ namespace CommanderGQL
 
     public void ConfigureServices(IServiceCollection services)
     {
+
       Console.WriteLine(Configuration.GetConnectionString("CommandConStr"));
 
-      //   services.AddPooledDbContextFactory<AppDbContext>(opt => opt.UseSqlServer
-      //   (Configuration.GetConnectionString("CommandConStr")));
-
-      // ToDo: Fix this
-      services.AddPooledDbContextFactory<AppDbContext>(opt => opt.UseSqlServer("Server=localhost,1433;Database=ComandsDB;User Id=SA;Password=Passw@rd"));
+      services.AddPooledDbContextFactory<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CommandConStr")));
 
       services
           .AddGraphQLServer()
